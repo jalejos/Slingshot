@@ -2,60 +2,57 @@
 using System.Collections;
 
 public class SlingshotScript : MonoBehaviour {
-
-	GameObject projectile;
-	public GameObject prefabProjectile;
 	GameObject launchPoint;
-	Vector3 launchPos;
+	public GameObject projectilePrefab;
+	GameObject projectile;
+	Rigidbody rbProjectile;
 	bool aimingMode;
 	public float velocity;
 
-	void Awake () {
-		Transform transformLaunchPoint = transform.Find ("LaunchPoint");
-		launchPoint = transformLaunchPoint.gameObject;
+	void Awake (){
+		Transform launchTransform = this.transform.FindChild ("LaunchPoint");
+		launchPoint = launchTransform.gameObject;
 		launchPoint.SetActive (false);
-		launchPos = transformLaunchPoint.position;
 	}
 
-	void FixedUpdate () {
+	void FixedUpdate (){
 		if (!aimingMode) {
 			return;
 		}
-		Vector3 mouseScreenPos = Input.mousePosition;
-		mouseScreenPos.z = -Camera.main.transform.position.z;
-		Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint (mouseScreenPos);
-		Vector3 mouseDelta = mouseWorldPos - launchPos;
+		Vector3 mouseScreen = Input.mousePosition;
+		mouseScreen.z = -Camera.main.transform.position.z;
+		Vector3 mouseWorld = Camera.main.ScreenToWorldPoint (mouseScreen);
+		projectile.transform.position = mouseWorld;
 		float maxMagnitude = this.GetComponent<SphereCollider> ().radius;
-		if (mouseDelta.magnitude > maxMagnitude) {
-			mouseDelta.Normalize ();
-			mouseDelta *= maxMagnitude;
+		Vector3 projectileDelta = projectile.transform.position - launchPoint.transform.position;
+		if (projectileDelta.magnitude > maxMagnitude) {
+			projectileDelta.Normalize ();
+			projectileDelta *= maxMagnitude;
 		}
-		Vector3 projectilePos = mouseDelta + launchPos;
-		projectile.transform.position = projectilePos;
-
+		projectile.transform.position = projectileDelta + launchPoint.transform.position;
 		if (Input.GetMouseButtonUp (0)) {
 			aimingMode = false;
-			projectile.GetComponent<Rigidbody> ().velocity = -mouseDelta * velocity;
-			projectile.GetComponent<Rigidbody> ().isKinematic = false;
+			rbProjectile.isKinematic = false;
+			rbProjectile.velocity = -projectileDelta * velocity;
 			FollowCam.cam.poi = projectile;
 			projectile = null;
 		}
 	}
 
-	void OnMouseEnter () {
-		if(!aimingMode)
-			launchPoint.SetActive (true);
+	void OnMouseEnter (){
+		launchPoint.SetActive (true);
 	}
 
-	void OnMouseExit () {
-		if(!aimingMode)
+	void OnMouseExit (){
+		if (!aimingMode)
 			launchPoint.SetActive (false);
 	}
 
-	void OnMouseDown () {
-		projectile = Instantiate (prefabProjectile) as GameObject;
-		projectile.transform.position = launchPos;
-		projectile.GetComponent<Rigidbody> ().isKinematic = true;
+	void OnMouseDown (){
+		projectile = Instantiate (projectilePrefab) as GameObject;
+		projectile.transform.position = launchPoint.transform.position;
+		rbProjectile = projectile.GetComponent<Rigidbody> ();
+		rbProjectile.isKinematic = true;
 		aimingMode = true;
 	}
 }
