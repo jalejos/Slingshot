@@ -1,9 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SlingshotScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SessionPreparations/FollowCam1.cs">
     <Files>
-      <File FileName="Assets/Scripts/SlingshotScript.cs" Line="26" Column="1" />
-      <File FileName="Assets/Scripts/FollowCam.cs" Line="23" Column="43" />
+      <File FileName="Assets/Scripts/SlingshotScript.cs" Line="38" Column="22" />
+      <File FileName="Assets/Scripts/FollowCam.cs" Line="13" Column="14" />
+      <File FileName="Assets/SessionPreparations/FollowCam1.cs" Line="19" Column="23" />
+      <File FileName="Assets/SessionPreparations/SlingshotScript1.cs" Line="37" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
