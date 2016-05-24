@@ -20,7 +20,8 @@ public class FollowCam1 : MonoBehaviour {
 		} else {
 			pos = poi.transform.position;
 			if (poi.tag == "Projectile") {
-				if (poi.GetComponent<Rigidbody> ().IsSleeping ()) {
+				if (poi.GetComponent<Rigidbody> ().IsSleeping () || Input.GetMouseButtonUp(1)) {
+					Destroy (poi);
 					poi = null;
 					return;
 				}

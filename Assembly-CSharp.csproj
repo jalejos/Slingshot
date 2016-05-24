@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\FollowCam.cs" />
+     <Compile Include="Assets\Scripts\Pillar1.cs" />
      <Compile Include="Assets\Scripts\SlingshotScript.cs" />
      <Compile Include="Assets\SessionPreparations\FollowCam1.cs" />
      <Compile Include="Assets\SessionPreparations\SlingshotScript1.cs" />
